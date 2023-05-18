@@ -25,6 +25,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView{
+            
             Form {
                 Section{
                     Text("When do you want to wake up?")
@@ -44,9 +45,22 @@ struct ContentView: View {
                     Text("Daily coffee intake")
                         .font(.headline)
 
-                    Stepper(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups", value: $coffeeAmount, in: 1...20)
+//                    Stepper(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups", value: $coffeeAmount, in: 1...20)
+                    Picker("Select the amount of coffee per day", selection: $coffeeAmount){
+                        ForEach(1...20, id: \.self){coffeeAmount in
+                            Text(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups")
+                        }
+                    }
                 }
+                
+                HStack{
+                    Spacer()
+                    Text("Advised Sleeping Time: \(alertMessage)")
+                    Spacer()
                 }
+    
+                }
+            
             .navigationBarTitle("You Better Rest")
             .toolbar{
                 Button("Calculate", action: calculateBedtime)
